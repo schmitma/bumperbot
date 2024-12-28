@@ -1,0 +1,18 @@
+# pre-commit run --all-files
+
+repos:
+  - repo: local
+    hooks: 
+     - id: clang-format
+       name: Format C++ files with clang-format
+       entry: clang-format
+       args: [--style=file, -i] # Use .clang-format and modify files in-place
+       language: system # Use the system-installed clang-format
+       files: \.(cpp|hpp|cc|cxx|h)$ # Regex to match C++ files
+
+    #  - id: cpp-lint
+    #    name: Lint C++ files with clang-tidy
+    #    entry: clang-tidy
+    #    args: []
+    #    language: system
+    #    files: \.(cpp|hpp|cc|cxx|h)$

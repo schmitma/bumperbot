@@ -1,0 +1,183 @@
+---
+# pay close attention that every check is followed by a , otherwise the check is not activated
+Checks: "
+  google-build-explicit-make-pair,
+  google-build-namespaces,
+  google-build-using-namespace,
+  google-default-arguments,
+  google-explicit-constructor,
+  google-global-names-in-headers,
+  google-objc-avoid-nsobject-new,
+  google-objc-avoid-throwing-exception,
+  google-objc-function-naming,
+  google-objc-global-variable-declaration,
+  google-readability-avoid-underscore-in-googletest-name,
+  google-readability-casting,
+  google-readability-function-size,
+  google-readability-todo,
+  google-runtime-int,
+  google-runtime-operator,
+  google-upgrade-googletest-case,
+  bugprone-forward-declaration-namespace,
+  fuchsia-multiple-inheritance,
+  fuchsia-trailing-return,
+  llvm-header-guard,
+  modernize-use-nullptr,
+  modernize-use-using,
+  readability-identifier-naming,
+  boost-use-to-string,
+  bugprone-bool-pointer-implicit-conversion,
+  bugprone-copy-constructor-init,
+  bugprone-exception-escape,
+  bugprone-incorrect-roundings,
+  bugprone-integer-division,
+  bugprone-lambda-function-name,
+  bugprone-misplaced-operator-in-strlen-in-alloc,
+  bugprone-move-forwarding-reference,
+  bugprone-parent-virtual-call,
+  bugprone-sizeof-container,
+  bugprone-string-constructor,
+  bugprone-string-integer-assignment,
+  bugprone-string-literal-with-embedded-nul,
+  bugprone-suspicious-enum-usage,
+  bugprone-suspicious-memset-usage,
+  bugprone-suspicious-semicolon,
+  bugprone-suspicious-string-compare,
+  bugprone-throw-keyword-missing,
+  bugprone-undefined-memory-manipulation,
+  bugprone-use-after-move,
+  misc-unused-alias-decls,
+  misc-unused-parameters,
+  misc-unused-using-decls,
+  modernize-deprecated-headers,
+  modernize-raw-string-literal,
+  modernize-use-override,
+  performance-faster-string-find,
+  performance-for-range-copy,
+  performance-implicit-conversion-in-loop,
+  performance-inefficient-algorithm,
+  performance-inefficient-string-concatenation,
+  performance-inefficient-vector-operation,
+  performance-move-const-arg,
+  performance-noexcept-move-constructor,
+  performance-unnecessary-value-param"
+WarningsAsErrors: ""
+HeaderFilterRegex: ".*integration_can_bus_ros\/include\/.*"
+AnalyzeTemporaryDtors: false
+FormatStyle: none
+CheckOptions:
+  - key: llvm-header-guard.HeaderFileExtensions
+    value: ",h,hh,hpp,hxx"
+  - key: readability-identifier-naming.AbstractClassCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.ClassCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.ClassConstantCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.ClassMemberCase
+    value: "lower_case"
+  # REQ-TWAPA-CPPSTY-0704: Variable Names: trailing "_" NOT for public members, so also not for static ones
+  #  - key: readability-identifier-naming.ClassMemberSuffix
+  #    value: "_"
+  - key: readability-identifier-naming.ClassMethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.ConstantCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.ConstantMemberCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.ConstantParameterCase
+    value: "lower_case"
+  - key: readability-identifier-naming.ConstantPointerParameterCase
+    value: "lower_case"
+  - key: readability-identifier-naming.ConstexprFunctionCase
+    value: "camelBack"
+  - key: readability-identifier-naming.ConstexprMethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.EnumCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.EnumConstantCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.FunctionCase
+    value: "camelBack"
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.GlobalConstantPointerCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.GlobalFunctionCase
+    value: "camelBack"
+  - key: readability-identifier-naming.GlobalPointerCase
+    value: "lower_case"
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: "lower_case"
+  - key: readability-identifier-naming.InlineNamespaceCase
+    value: "lower_case"
+  - key: readability-identifier-naming.LocalConstantCase
+    value: "lower_case"
+  - key: readability-identifier-naming.LocalConstantPointerCase
+    value: "lower_case"
+  - key: readability-identifier-naming.LocalPointerCase
+    value: "lower_case"
+  - key: readability-identifier-naming.LocalVariableCase
+    value: "lower_case"
+  - key: readability-identifier-naming.MemberCase
+    value: "lower_case"
+  - key: readability-identifier-naming.MethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.NamespaceCase
+    value: "lower_case"
+  - key: readability-identifier-naming.ParameterCase
+    value: "lower_case"
+  - key: readability-identifier-naming.ParameterPackCase
+    value: "lower_case"
+  - key: readability-identifier-naming.PointerParameterCase
+    value: "lower_case"
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: "lower_case"
+  # Variable Names: trailing "_" for private and protected members
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: "_"
+  - key: readability-identifier-naming.PrivateMethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: "lower_case"
+  # Variable Names: trailing "_" for private and protected members
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: "_"
+  - key: readability-identifier-naming.ProtectedMethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.PublicMemberCase
+    value: "lower_case"
+  # Variable Names: trailing "_" NOT for public members
+  #  - key: readability-identifier-naming.PublicMemberSuffix
+  #    value: "_"
+  - key: readability-identifier-naming.PublicMethodCase
+    value: "camelBack"
+  - key: readability-identifier-naming.StaticConstantCase
+    value: "UPPER_CASE"
+  - key: readability-identifier-naming.StaticVariableCase
+    value: "lower_case"
+  - key: readability-identifier-naming.StructCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.TemplateParameterCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.TemplateTemplateParameterCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.TypeAliasCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.TypedefCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.TypeTemplateParameterCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.UnionCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.ValueTemplateParameterCase
+    value: "CamelCase"
+  - key: readability-identifier-naming.VariableCase
+    value: "lower_case"
+  - key: readability-identifier-naming.VirtualMethodCase
+    value: "camelBack"
+
+---
+

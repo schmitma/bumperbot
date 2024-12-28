@@ -1,0 +1,101 @@
+---
+BasedOnStyle: Google
+Language: Cpp
+
+# Generate a configuration
+# clang-format -style=llvm -dump-config > .clang-format
+
+# Run clang-format recursively
+# find . -name "*.cpp" -o -name "*.hpp" | xargs clang-format -i
+
+BreakBeforeBraces: Custom
+BraceWrapping:
+  # Function Declarations and Definitions
+  AfterFunction: true
+  # Conditionals
+  BeforeElse: true
+  # Loops and Switch Statements
+  AfterControlStatement: true
+  # Class Format
+  AfterClass: true
+  # Namespace Formatting
+  AfterNamespace: true
+
+# Names and Order of Includes
+IncludeBlocks: Regroup
+IncludeCategories:
+  # C system header
+  - Regex: '^(<[^/]*\.h>|<sys/.*>)$'
+    Priority: 1
+  # C++ system header
+  - Regex: '^<[^\./]*>$'
+    Priority: 2
+  # Other libraries headers
+  - Regex: "^<.*>$"
+    Priority: 3
+  # Your projects headers
+  - Regex: '^".*\.(h|hpp)"$'
+    Priority: 4
+
+# Line Length
+ColumnLimit: 120
+PenaltyExcessCharacter: 100 # higher than value of PenaltyReturnTypeOnItsOwnLine
+
+# Spaces vs. Tabs
+IndentWidth: 2
+UseTab: Never
+
+# Function Declarations and Definitions
+AlwaysBreakAfterDefinitionReturnType: None
+PenaltyReturnTypeOnItsOwnLine: 50
+ContinuationIndentWidth: 4
+AllowAllParametersOfDeclarationOnNextLine: false
+BinPackParameters: false
+PenaltyBreakBeforeFirstCallParameter: 0
+AllowShortFunctionsOnASingleLine: None
+
+# Floating-point Literals
+# NO FORMAT STYLE OPTION IN CLANG FORMAT
+
+# Function Calls
+AlignAfterOpenBracket: AlwaysBreak
+BinPackArguments: true
+
+# Braced Initializer List Format
+Cpp11BracedListStyle: true
+
+# Conditionals
+AllowShortIfStatementsOnASingleLine: false
+
+# Loops and Switch Statements
+AllowShortCaseLabelsOnASingleLine: false
+IndentCaseLabels: true
+
+# Pointer and Reference Expressions
+DerivePointerAlignment: false
+PointerAlignment: Left
+
+# Preprocessor Directives
+IndentPPDirectives: AfterHash
+
+# Constructor Initializer Lists
+BreakConstructorInitializers: BeforeColon
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
+ConstructorInitializerIndentWidth: 4
+
+# Namespace Formatting
+NamespaceIndentation: None
+
+# Horizontal Whitespace
+# Cpp11BracedListStyle: false
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+AlignConsecutiveAssignments: true
+SpaceBeforeParens: ControlStatements
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeAssignmentOperators: true
+SpacesInAngles: false
+
+# Vertical Whitespace
+KeepEmptyLinesAtTheStartOfBlocks: false
+MaxEmptyLinesToKeep: 1
