@@ -44,8 +44,8 @@ jobs:
           source install/setup.bash
           colcon test
 
-      - name: Upload build results (optional)
-        uses: actions/upload-artifact@v2
+      - name: Upload build results
+        uses: actions/upload-artifact@v3
         with:
           name: ros2-build-results
           path: install
