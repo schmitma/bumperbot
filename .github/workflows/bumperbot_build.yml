@@ -1,0 +1,51 @@
+name: Build bumperbot workspace
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up ROS 2
+        run: |
+          sudo apt update
+          sudo apt install -y curl gnupg lsb-release
+          curl -sSL http://repo.ros2.org/repos.yaml | sudo tee /etc/apt/sources.list.d/ros2-latest.list
+          sudo apt update
+          sudo apt install -y ros-jazzy-desktop
+          sudo apt install -y python3-colcon-common-extensions
+
+      - name: Install dependencies
+        run: |
+          sudo apt install -y python3-pip
+          pip3 install -r requirements.txt
+          sudo apt install -y python3-rosdep
+          sudo rosdep init
+          rosdep update
+          rosdep install --from-paths src --ignore-src --rosdistro jazzy -y
+
+      - name: Build the ROS 2 workspace
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          colcon build --symlink-install
+
+      - name: Run tests
+        run: |
+          source /opt/ros/jazzy/setup.bash
+          source install/setup.bash
+          colcon test
+
+      - name: Upload build results (optional)
+        uses: actions/upload-artifact@v2
+        with:
+          name: ros2-build-results
+          path: install
