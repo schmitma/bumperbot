@@ -12,13 +12,8 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - name: Set working directory
-        run: echo "WORKING_DIR=~/workspace" >> $GITHUB_ENV
-
       - name: Check out the repository
         uses: actions/checkout@v3
-        with:
-          path: ${{ env.WORKING_DIR }}/src
 
       - name: Set up ROS 2
         # https://docs.ros.org/en/jazzy/Installation/Alternatives/Ubuntu-Install-Binary.html
@@ -39,29 +34,23 @@ jobs:
 
       - name: Install dependencies
         run: 
-          cd ~/workspace
           sudo apt install -y python3-pip
           pip3 install -r requirements.txt
           sudo apt install -y python3-rosdep
           sudo rosdep init
           rosdep update
           rosdep install --from-paths src --ignore-src --rosdistro jazzy -y
-        working-directory: $WORKING_DIR
 
       - name: Build the ROS 2 workspace
         run: |
-          cd ~/workspace
           source /opt/ros/jazzy/setup.bash
           colcon build --symlink-install
-        working-directory: $WORKING_DIR
 
       - name: Run tests
         run: |
-          cd ~/workspace
           source /opt/ros/jazzy/setup.bash
           source install/setup.bash
           colcon test
-        working-directory: $WORKING_DIR
 
       - name: Upload build results
         uses: actions/upload-artifact@v3
