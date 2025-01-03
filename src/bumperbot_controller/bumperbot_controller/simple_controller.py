@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
 
-import rclpy
-from rclpy.node import Node
-from std_msgs.msg import Float64MultiArray
-from geometry_msgs.msg import TwistStamped, TransformStamped
-from sensor_msgs.msg import JointState
-import numpy as np
-from rclpy.time import Time
-from rclpy.constants import S_TO_NS
-from nav_msgs.msg import Odometry
-from tf_transformations import quaternion_from_euler
 import math
+
+import numpy as np
+import rclpy
+from geometry_msgs.msg import TransformStamped, TwistStamped
+from nav_msgs.msg import Odometry
+from rclpy.constants import S_TO_NS
+from rclpy.node import Node
+from rclpy.time import Time
+from sensor_msgs.msg import JointState
+from std_msgs.msg import Float64MultiArray
 from tf2_ros import TransformBroadcaster
+from tf_transformations import quaternion_from_euler
 
 
 class SimpleController(Node):
@@ -40,9 +41,15 @@ class SimpleController(Node):
         self.joint_sub_ = self.create_subscription(JointState, "joint_states", self.jointCallback, 10)
         self.odom_pub_ = self.create_publisher(Odometry, "bumperbot_controller/odom", 10)
 
-        self.speed_conversion_ = np.array([[self.wheel_radius_/2, self.wheel_radius_/2], 
-                                           [self.wheel_radius_/self.wheel_separation_, -self.wheel_radius_/self.wheel_separation_]
-        ])
+        self.speed_conversion_ = np.array(
+            [
+                [self.wheel_radius_ / 2, self.wheel_radius_ / 2],
+                [
+                    self.wheel_radius_ / self.wheel_separation_,
+                    -self.wheel_radius_ / self.wheel_separation_,
+                ],
+            ]
+        )
 
         self.odom_msg_ = Odometry()
         self.odom_msg_.header.frame_id = "odom"
@@ -56,13 +63,12 @@ class SimpleController(Node):
         self.transform_stamped_ = TransformStamped()
         self.transform_stamped_.header.frame_id = "odom"
         self.transform_stamped_.child_frame_id = "base_footprint"
-        
+
         self.get_logger().info("The conversion matrix is %s" % self.speed_conversion_)
 
     def velCallback(self, msg):
-        robot_speed = np.array([[msg.twist.linear.x],
-                                [msg.twist.angular.z]])
-        
+        robot_speed = np.array([[msg.twist.linear.x], [msg.twist.angular.z]])
+
         wheel_speed = np.matmul(np.linalg.inv(self.speed_conversion_), robot_speed)
 
         wheel_speed_msg = Float64MultiArray()
@@ -80,7 +86,7 @@ class SimpleController(Node):
         self.prev_time_ = Time.from_msg(msg.header.stamp)
 
         phi_left = dp_left / (dt.nanoseconds / S_TO_NS)
-        phi_right = dp_right / (dt.nanoseconds /S_TO_NS)
+        phi_right = dp_right / (dt.nanoseconds / S_TO_NS)
 
         linear = (self.wheel_radius_ * phi_right + self.wheel_radius_ * phi_left) / 2
         angular = (self.wheel_radius_ * phi_right - self.wheel_radius_ * phi_left) / self.wheel_separation_
@@ -122,5 +128,5 @@ def main():
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

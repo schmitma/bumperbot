@@ -1,13 +1,19 @@
 import rclpy
+from geometry_msgs.msg import TransformStamped
 from rclpy.node import Node
 from tf2_ros import TransformException
+from tf2_ros.buffer import Buffer
 from tf2_ros.static_transform_broadcaster import StaticTransformBroadcaster
 from tf2_ros.transform_broadcaster import TransformBroadcaster
-from tf2_ros.buffer import Buffer
 from tf2_ros.transform_listener import TransformListener
-from geometry_msgs.msg import TransformStamped
+from tf_transformations import (
+    quaternion_from_euler,
+    quaternion_inverse,
+    quaternion_multiply,
+)
+
 from bumperbot_msgs.srv import GetTransform
-from tf_transformations import quaternion_from_euler, quaternion_multiply, quaternion_inverse
+
 
 class SimpleTfKinematics(Node):
     def __init__(self):
@@ -41,9 +47,14 @@ class SimpleTfKinematics(Node):
 
         self.static_tf_broadcaster_.sendTransform(self.static_transform_stamped_)
 
-        self.get_logger().info("Publishing static transfrom between %s and %s" % 
-                               (self.static_transform_stamped_.header.frame_id, self.static_transform_stamped_.child_frame_id))
-        
+        self.get_logger().info(
+            "Publishing static transfrom between %s and %s"
+            % (
+                self.static_transform_stamped_.header.frame_id,
+                self.static_transform_stamped_.child_frame_id,
+            )
+        )
+
         self.timer_ = self.create_timer(0.1, self.timerCallback)
 
         self.get_transform_srv_ = self.create_service(GetTransform, "get_transform", self.getTransformCallback)
@@ -71,17 +82,19 @@ class SimpleTfKinematics(Node):
             self.orientation_increment_ = quaternion_inverse(self.orientation_increment_)
             self.rotations_counter_ = 0
 
-
     def getTransformCallback(self, req, res):
         self.get_logger().info("Requested transform between %s and %s" % (req.frame_id, req.child_frame_id))
         requested_transform = TransformStamped()
         try:
             requested_transform = self.tf_buffer_.lookup_transform(req.frame_id, req.child_frame_id, rclpy.time.Time())
         except TransformException as e:
-            self.get_logger().error("An error occurred while transforming %s and %s" % (req.frame_id, req.child_frame_id))
+            self.get_logger().error(
+                "An error occurred while transforming %s and %s" % (req.frame_id, req.child_frame_id)
+            )
+            self.get_logger().error(f"{e}")
             res.success = False
             return res
-        
+
         res.transform = requested_transform
         res.success = True
         return res
@@ -95,5 +108,5 @@ def main():
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

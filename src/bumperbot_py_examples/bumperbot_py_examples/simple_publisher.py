@@ -2,6 +2,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 
+
 class SimplePublisher(Node):
     def __init__(self):
         super().__init__("simple_publisher")
@@ -31,5 +32,5 @@ def main():
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

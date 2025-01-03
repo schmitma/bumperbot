@@ -1,14 +1,15 @@
 # pre-commit run --all-files
 
 repos:
+# C++
   - repo: local
     hooks: 
-     - id: clang-format
-       name: Format C++ files with clang-format
-       entry: clang-format
-       args: [--style=file, -i] # Use .clang-format and modify files in-place
-       language: system # Use the system-installed clang-format
-       files: \.(cpp|hpp|cc|cxx|h)$ # Regex to match C++ files
+    - id: clang-format
+      name: Format C++ files with clang-format
+      entry: clang-format
+      args: [--style=file, -i] # Use .clang-format and modify files in-place
+      language: system # Use the system-installed clang-format
+      files: \.(cpp|hpp|cc|cxx|h)$ # Regex to match C++ files
 
     #  - id: cpp-lint
     #    name: Lint C++ files with clang-tidy
@@ -16,3 +17,21 @@ repos:
     #    args: []
     #    language: system
     #    files: \.(cpp|hpp|cc|cxx|h)$
+
+# Python
+  - repo: https://github.com/psf/black
+    rev: 23.9.1
+    hooks:
+    - id: black
+      args: ["--line-length", "120", "--verbose"]
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 6.1.0
+    hooks:
+    - id: flake8
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0
+    hooks:
+    - id: isort
+      args: ["--profile", "black", "--verbose"]

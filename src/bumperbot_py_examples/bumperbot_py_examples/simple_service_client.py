@@ -1,7 +1,10 @@
+import sys
+
 import rclpy
 from rclpy.node import Node
+
 from bumperbot_msgs.srv import AddTwoInts
-import sys
+
 
 class SimpleServiceClient(Node):
     def __init__(self, a, b):
@@ -22,6 +25,7 @@ class SimpleServiceClient(Node):
     def responseCallback(self, future):
         self.get_logger().info("Service response %d" % future.result().sum)
 
+
 def main():
     rclpy.init()
 
@@ -34,6 +38,6 @@ def main():
     simple_service_client.destroy_node()
     rclpy.shutdown()
 
-if __name__ == '__main__':
-    main()
 
+if __name__ == "__main__":
+    main()

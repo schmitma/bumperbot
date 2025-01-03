@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 
-import rclpy
-from rclpy.node import Node
-from geometry_msgs.msg import TransformStamped
-from sensor_msgs.msg import JointState
-import numpy as np
-from rclpy.time import Time
-from rclpy.constants import S_TO_NS
-from nav_msgs.msg import Odometry
-from tf_transformations import quaternion_from_euler
 import math
+
+import numpy as np
+import rclpy
+from geometry_msgs.msg import TransformStamped
+from nav_msgs.msg import Odometry
+from rclpy.constants import S_TO_NS
+from rclpy.node import Node
+from rclpy.time import Time
+from sensor_msgs.msg import JointState
 from tf2_ros import TransformBroadcaster
+from tf_transformations import quaternion_from_euler
 
 
 class NoisyController(Node):
@@ -62,7 +63,7 @@ class NoisyController(Node):
         self.prev_time_ = Time.from_msg(msg.header.stamp)
 
         phi_left = dp_left / (dt.nanoseconds / S_TO_NS)
-        phi_right = dp_right / (dt.nanoseconds /S_TO_NS)
+        phi_right = dp_right / (dt.nanoseconds / S_TO_NS)
 
         linear = (self.wheel_radius_ * phi_right + self.wheel_radius_ * phi_left) / 2
         angular = (self.wheel_radius_ * phi_right - self.wheel_radius_ * phi_left) / self.wheel_separation_
@@ -104,5 +105,5 @@ def main():
     rclpy.shutdown()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
