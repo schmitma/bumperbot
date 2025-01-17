@@ -12,6 +12,7 @@
   <depend>bumperbot_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>rcl_interfaces</depend>
+  <depend>rclcpp_lifecycle</depend>
   <depend>rclcpp</depend>
   <depend>std_msgs</depend>
   <depend>tf2_ros</depend>

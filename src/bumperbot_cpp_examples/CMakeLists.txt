@@ -10,6 +10,7 @@ find_package(bumperbot_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(rcl_interfaces REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_lifecycle REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
@@ -28,6 +29,9 @@ ament_target_dependencies(simple_parameter rclcpp rcl_interfaces)
 
 add_executable(simple_turtlesim_kinematics src/simple_turtlesim_kinematics.cpp)
 ament_target_dependencies(simple_turtlesim_kinematics rclcpp turtlesim)
+
+add_executable(simple_lifecycle_node src/simple_lifecycle_node.cpp)
+ament_target_dependencies(simple_lifecycle_node rclcpp rclcpp_lifecycle std_msgs)
 
 add_executable(simple_tf_kinematics src/simple_tf_kinematics.cpp)
 ament_target_dependencies(simple_tf_kinematics 
@@ -50,13 +54,14 @@ install(
 )
 
 install(TARGETS
-  simple_publisher
-  simple_subscriber
+  simple_lifecycle_node
   simple_parameter
-  simple_turtlesim_kinematics
-  simple_tf_kinematics
-  simple_service_server
+  simple_publisher
   simple_service_client
+  simple_service_server
+  simple_subscriber
+  simple_tf_kinematics
+  simple_turtlesim_kinematics
   DESTINATION lib/${PROJECT_NAME}
 )
 
