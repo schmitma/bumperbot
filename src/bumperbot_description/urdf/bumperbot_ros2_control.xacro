@@ -1,18 +1,30 @@
 <?xml version="1.0"?>
 <robot name="bumperbot" xmlns:xacro="http://ros.org/wiki/xacro">
     <ros2_control name="RobotSystem" type="system">
-        <xacro:if value="$(arg is_ignition)">
-            <hardware>
-                <plugin>ign_ros2_control/IgnitionSystem</plugin>
-            </hardware>
-        </xacro:if>
 
-        <xacro:unless value="$(arg is_ignition)">
+        <xacro:if value="$(arg is_sim)">
+            <!-- ROS 2 Humble -->
+            <xacro:if value="$(arg is_ignition)">
+                <hardware>
+                    <plugin>ign_ros2_control/IgnitionSystem</plugin>
+                </hardware>
+            </xacro:if>
+
+            <!-- ROS 2 Iron or above -->
+            <xacro:unless value="$(arg is_ignition)">
+                <hardware>
+                    <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                </hardware>
+            </xacro:unless>
+        </xacro:if>
+        <xacro:unless>
             <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+                <plugin>bumperbot_firmware/BumperbotInterface</plugin>
+                <param name="port">/dev/ttyACM0</param>
             </hardware>
         </xacro:unless>
-
+        
+        <!-- ros2_control Common Interfaces -->
         <joint name="wheel_right_joint">
             <command_interface name="velocity">
                 <param name="min">-1</param>

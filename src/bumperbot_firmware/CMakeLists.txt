@@ -65,6 +65,11 @@ install(
   DESTINATION include
 )
 
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
 install(PROGRAMS
   ${PROJECT_NAME}/simple_serial_transmitter.py
   ${PROJECT_NAME}/simple_serial_receiver.py
